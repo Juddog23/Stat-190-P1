@@ -204,8 +204,28 @@ summary(risks$CreatedDate)
 #(shrugging emoji)
 
 #This is how we'll tell R to recognize this as a date, and correctly
-risks$Created_Date <- as.Date(as.numeric(risks$CreatedDate), 
+risks$CreatedDate <- as.Date(as.numeric(risks$CreatedDate), 
+                             origin = "1899-12-30")
+risks$TargetResolutionDate <- as.Date(as.numeric(risks$TargetResolutionDate), 
+                                      origin = "1899-12-30")
+risks$DateClosed <- as.Date(as.numeric(risks$DateClosed), 
+                            origin = "1899-12-30")
+
+issues$CreatedDate <- as.Date(as.numeric(issues$CreatedDate), 
                               origin = "1899-12-30")
+issues$TargetResolutionDate <- as.Date(as.numeric(issues$TargetResolutionDate), 
+                                       origin = "1899-12-30")
+issues$ActualResolutionDate <- as.Date(as.numeric(issues$ActualResolutionDate), 
+                                       origin = "1899-12-30")
+
+crs$CreatedDate <- as.Date(as.numeric(crs$CreatedDate), 
+                           origin = "1899-12-30")
+crs$ChangeReviewDate <- as.Date(as.numeric(crs$ChangeReviewDate), 
+                                origin = "1899-12-30")
+
+View(issues)
+View(crs)
+View(risks)
 #check to see if it worked:
 summary(risks$Created_Date)
 #that's better
