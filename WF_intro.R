@@ -172,9 +172,31 @@ ggplot(data = risks) +
 risks_agg <- risks %>%
   group_by(PRJID) %>% #want to aggregate by unique PRJID
   summarise(
-    n = sum(RiskImpactRating %in%c("High", "Low", "Medium")), #count number of not NA
-    n_HighImpact = sum(RiskImpactRating %in%c("High"))) #count only number of "High"
+    num_risks = sum(RiskImpactRating %in%c("High", "Low", "Medium")), #count number of not NA
+    num_HighImpact = sum(RiskImpactRating %in%c("High")),#count only number of "High"
+    num_MedImpact = sum(RiskImpactRating %in%c("Medium")),
+    num_LowImpact = sum(RiskImpactRating %in%c("Low")),
+    num_HighProb = sum(RiskProbabilityRating %in%c("High")),
+    num_ModProb = sum(RiskProbabilityRating %in%c("Moderate")),
+    num_LowProb = sum(RiskProbabilityRating %in%c("Low")),
+    num_MitResp = sum(RiskResponse %in%c("Mitigation")),
+    num_AccResp = sum(RiskResponse %in%c("Acceptance")),
+    num_AvdResp = sum(RiskResponse %in%c("Avoidance")),
+    num_TrnResp = sum(RiskResponse %in%c("Transference")),
+    num_ScpType = sum(RiskType %in%c("Scope")),
+    num_SchType = sum(RiskType %in%c("Schedule")),
+    num_FinType = sum(RiskType %in%c("Financial")))
 
+issues_agg <- issues %>%
+  group_by(PRJID) %>% #want to aggregate by unique PRJID
+  summarise(
+    num_issues = sum(IssueImpactRating %in%c("High", "Low", "Moderate")), #count number of not NA
+    num_HighImpact = sum(IssueImpactRating %in%c("High")),#count only number of "High"
+    num_ModImpact = sum(IssueImpactRating %in%c("Moderate")),
+    num_LowImpact = sum(IssueImpactRating %in%c("Low")))
+
+write.csv(risks_agg, file = "risks_agg.csv", row.names = FALSE)
+write.csv(issues_agg, file = "issues_agg.csv", row.names = FALSE)
 
 summary(risks$CreatedDate)
 #that's odd. 
